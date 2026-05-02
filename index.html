@@ -1,0 +1,2408 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SGE - EREF Iva Ferreira | Secretaria Online</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --blue-900: #1e3a8a;
+            --blue-800: #1e40af;
+            --blue-700: #1d4ed8;
+            --blue-50: #eff6ff;
+            --yellow-500: #eab308;
+            --yellow-600: #ca8a04;
+            --slate-50: #f8fafc;
+            --slate-100: #f1f5f9;
+            --slate-200: #e2e8f0;
+            --slate-400: #94a3b8;
+            --slate-500: #64748b;
+            --slate-600: #475569;
+            --slate-700: #334155;
+            --slate-800: #1e293b;
+            --slate-900: #0f172a;
+            --emerald-500: #10b981;
+            --emerald-600: #059669;
+            --red-500: #ef4444;
+            --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.07), 0 2px 4px -2px rgb(0 0 0 / 0.07);
+            --shadow-lg: 0 10px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--slate-50);
+            color: var(--slate-900);
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+        }
+
+        /* ===== SIDEBAR ===== */
+        #sidebar {
+            width: 260px;
+            min-width: 260px;
+            background: var(--blue-900);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            z-index: 50;
+        }
+
+        .sidebar-header {
+            padding: 1.75rem 1.5rem;
+            border-bottom: 1px solid rgba(255,255,255,0.07);
+            display: flex;
+            align-items: center;
+            gap: 0.875rem;
+        }
+
+        .logo-box {
+            width: 46px;
+            height: 46px;
+            background: var(--yellow-500);
+            color: var(--blue-900);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 900;
+            font-size: 1.25rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(234,179,8,0.35);
+            flex-shrink: 0;
+        }
+
+        .app-name h1 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 0.01em;
+            line-height: 1.2;
+        }
+        .app-name p {
+            font-size: 9px;
+            color: rgba(255,255,255,0.45);
+            text-transform: uppercase;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            margin-top: 2px;
+        }
+
+        .nav-section-label {
+            font-size: 9px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: rgba(255,255,255,0.3);
+            padding: 0 1.25rem;
+            margin-bottom: 0.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .nav-list { flex: 1; padding: 1rem 0.75rem; list-style: none; overflow-y: auto; }
+        .nav-list::-webkit-scrollbar { width: 3px; }
+        .nav-list::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 3px; }
+
+        .nav-btn {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.7rem 1rem;
+            background: transparent;
+            border: none;
+            color: rgba(255,255,255,0.55);
+            font-family: 'DM Sans', sans-serif;
+            font-weight: 500;
+            font-size: 0.82rem;
+            letter-spacing: 0;
+            cursor: pointer;
+            border-radius: 10px;
+            transition: all 0.2s;
+            margin-bottom: 2px;
+            text-align: left;
+        }
+
+        .nav-btn svg { width: 17px; height: 17px; flex-shrink: 0; }
+        .nav-btn:hover { background: rgba(255,255,255,0.06); color: white; }
+        .nav-btn.active {
+            background: white;
+            color: var(--blue-900);
+            font-weight: 600;
+            box-shadow: var(--shadow-lg);
+        }
+        .nav-btn.active svg { color: var(--yellow-600); }
+
+        .sidebar-footer {
+            padding: 1rem 1.5rem;
+            border-top: 1px solid rgba(255,255,255,0.07);
+            font-size: 9px;
+            color: rgba(255,255,255,0.3);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        /* ===== MAIN ===== */
+        main { flex: 1; display: flex; flex-direction: column; overflow: hidden; min-width: 0; }
+
+        header {
+            height: 64px;
+            background: white;
+            border-bottom: 1px solid var(--slate-100);
+            padding: 0 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-shrink: 0;
+        }
+
+        .search-bar {
+            background: var(--slate-100);
+            padding: 0.55rem 1rem;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            width: 360px;
+            transition: all 0.2s;
+            border: 2px solid transparent;
+        }
+        .search-bar:focus-within { background: white; border-color: var(--blue-900); }
+        .search-bar input {
+            background: transparent;
+            border: none;
+            outline: none;
+            width: 100%;
+            font-size: 0.83rem;
+            font-weight: 500;
+            font-family: 'DM Sans', sans-serif;
+            color: var(--slate-800);
+        }
+        .search-bar svg { width: 15px; height: 15px; color: var(--slate-400); flex-shrink: 0; }
+
+        .header-right { display: flex; align-items: center; gap: 1.25rem; }
+        .header-date {
+            text-align: right;
+            padding-right: 1.25rem;
+            border-right: 1px solid var(--slate-100);
+        }
+        .header-date p { font-size: 0.8rem; font-weight: 800; color: var(--blue-900); font-family: 'Plus Jakarta Sans', sans-serif; }
+        .header-date span { font-size: 9px; font-weight: 600; color: var(--slate-400); text-transform: uppercase; letter-spacing: 0.05em; }
+
+        .user-info { text-align: right; }
+        .user-info p { font-size: 0.8rem; font-weight: 700; }
+        .user-info span { font-size: 9px; color: var(--emerald-600); font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; }
+
+        .avatar {
+            width: 38px; height: 38px;
+            background: var(--blue-900);
+            color: var(--yellow-500);
+            display: flex; align-items: center; justify-content: center;
+            border-radius: 10px;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 900; font-size: 0.8rem;
+        }
+
+        /* ===== VIEW CONTAINER ===== */
+        #view-container {
+            flex: 1;
+            padding: 2rem 2.5rem;
+            overflow-y: auto;
+            scroll-behavior: smooth;
+        }
+        #view-container::-webkit-scrollbar { width: 5px; }
+        #view-container::-webkit-scrollbar-thumb { background: var(--slate-200); border-radius: 5px; }
+
+        .view { display: none; animation: fadeUp 0.25s ease-out; }
+        .view.active { display: block; }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ===== PAGE HEADER ===== */
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 2rem;
+        }
+        .page-title h2 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 1.75rem;
+            font-weight: 900;
+            color: var(--blue-900);
+            letter-spacing: -0.03em;
+        }
+        .page-title p { font-size: 0.83rem; color: var(--slate-500); font-weight: 500; margin-top: 2px; }
+
+        /* ===== BUTTONS ===== */
+        .btn {
+            display: inline-flex; align-items: center; gap: 0.5rem;
+            padding: 0.65rem 1.25rem;
+            border-radius: 10px; border: none;
+            font-family: 'DM Sans', sans-serif;
+            font-weight: 700; font-size: 0.8rem;
+            cursor: pointer; transition: all 0.2s;
+            text-transform: uppercase; letter-spacing: 0.03em;
+        }
+        .btn svg { width: 15px; height: 15px; }
+        .btn-primary { background: var(--blue-900); color: white; }
+        .btn-primary:hover { background: var(--slate-800); transform: translateY(-1px); box-shadow: var(--shadow-lg); }
+        .btn-yellow { background: var(--yellow-500); color: var(--blue-900); }
+        .btn-yellow:hover { background: var(--yellow-600); }
+        .btn-ghost { background: var(--slate-100); color: var(--slate-600); }
+        .btn-ghost:hover { background: var(--slate-200); }
+        .btn-danger { background: #fef2f2; color: var(--red-500); }
+        .btn-danger:hover { background: var(--red-500); color: white; }
+
+        /* ===== STATS GRID ===== */
+        .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.25rem; margin-bottom: 2rem; }
+
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 18px;
+            border: 1px solid var(--slate-100);
+            box-shadow: var(--shadow);
+            transition: all 0.2s;
+        }
+        .stat-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); }
+        .stat-icon {
+            width: 44px; height: 44px;
+            border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+            margin-bottom: 1rem;
+        }
+        .stat-icon svg { width: 20px; height: 20px; }
+        .stat-icon.blue { background: var(--blue-50); color: var(--blue-900); }
+        .stat-icon.yellow { background: #fefce8; color: var(--yellow-600); }
+        .stat-icon.green { background: #ecfdf5; color: var(--emerald-600); }
+        .stat-icon.orange { background: #fff7ed; color: #ea580c; }
+        .stat-value { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 2rem; font-weight: 900; line-height: 1; margin-bottom: 4px; }
+        .stat-label { font-size: 9px; font-weight: 800; text-transform: uppercase; color: var(--slate-400); letter-spacing: 0.08em; }
+
+        /* ===== DATA CARD ===== */
+        .data-card {
+            background: white;
+            border-radius: 18px;
+            border: 1px solid var(--slate-100);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+        .card-header {
+            padding: 1.25rem 1.75rem;
+            border-bottom: 1px solid var(--slate-100);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .card-header h4 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            color: var(--blue-900);
+            letter-spacing: 0.05em;
+        }
+
+        /* ===== TABLE ===== */
+        table { width: 100%; border-collapse: collapse; }
+        th {
+            text-align: left; padding: 0.875rem 1.5rem;
+            font-size: 9px; font-weight: 800; text-transform: uppercase;
+            color: var(--slate-400); background: var(--slate-50);
+            letter-spacing: 0.08em;
+        }
+        td { padding: 0.875rem 1.5rem; font-size: 0.83rem; border-bottom: 1px solid var(--slate-50); vertical-align: middle; }
+        tr:last-child td { border-bottom: none; }
+        tr:hover td { background: #fafbfc; }
+
+        /* ===== BADGES ===== */
+        .badge {
+            display: inline-flex; align-items: center;
+            padding: 0.2rem 0.65rem;
+            border-radius: 20px;
+            font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em;
+        }
+        .badge-blue { background: var(--blue-50); color: var(--blue-900); }
+        .badge-green { background: #ecfdf5; color: var(--emerald-600); }
+        .badge-yellow { background: #fefce8; color: var(--yellow-600); }
+        .badge-orange { background: #fff7ed; color: #ea580c; }
+        .badge-red { background: #fef2f2; color: var(--red-500); }
+        .badge-gray { background: var(--slate-100); color: var(--slate-600); }
+
+        /* ===== ITEM CARDS (List style) ===== */
+        .item-card {
+            background: white;
+            border-radius: 14px;
+            border: 1px solid var(--slate-100);
+            padding: 1.1rem 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 0.625rem;
+            transition: all 0.2s;
+            box-shadow: var(--shadow);
+        }
+        .item-card:hover { border-color: var(--slate-200); transform: translateX(3px); }
+        .item-card-left { display: flex; align-items: center; gap: 1rem; }
+        .item-icon {
+            width: 40px; height: 40px;
+            border-radius: 10px;
+            background: var(--blue-50);
+            color: var(--blue-900);
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0;
+        }
+        .item-icon svg { width: 18px; height: 18px; }
+        .item-title { font-weight: 700; font-size: 0.85rem; color: var(--slate-800); }
+        .item-sub { font-size: 0.75rem; color: var(--slate-500); margin-top: 1px; }
+        .item-card-right { display: flex; align-items: center; gap: 0.75rem; }
+
+        /* ===== FORM PANEL ===== */
+        .form-panel {
+            background: white;
+            border-radius: 18px;
+            border: 2px solid var(--blue-50);
+            padding: 1.75rem;
+            margin-bottom: 1.5rem;
+            display: none;
+        }
+        .form-panel.open { display: block; animation: fadeUp 0.2s ease-out; }
+        .form-panel-title {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 1rem;
+            font-weight: 800;
+            color: var(--blue-900);
+            margin-bottom: 1.25rem;
+        }
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+        .form-grid.cols-3 { grid-template-columns: 1fr 1fr 1fr; }
+        .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+        .form-group.full { grid-column: 1 / -1; }
+        label { font-size: 9px; font-weight: 800; text-transform: uppercase; color: var(--slate-500); letter-spacing: 0.08em; }
+        input, select, textarea {
+            padding: 0.65rem 0.875rem;
+            border-radius: 10px;
+            border: 2px solid var(--slate-100);
+            background: var(--slate-50);
+            outline: none;
+            font-family: 'DM Sans', sans-serif;
+            font-weight: 500;
+            font-size: 0.83rem;
+            color: var(--slate-800);
+            transition: all 0.2s;
+        }
+        input:focus, select:focus, textarea:focus {
+            border-color: var(--blue-900);
+            background: white;
+            box-shadow: 0 0 0 3px rgba(30,58,138,0.07);
+        }
+        textarea { resize: vertical; min-height: 80px; }
+        .form-actions { display: flex; gap: 0.75rem; justify-content: flex-end; margin-top: 1.25rem; }
+
+        /* ===== EMPTY STATE ===== */
+        .empty-state {
+            text-align: center;
+            padding: 3.5rem 2rem;
+            color: var(--slate-400);
+        }
+        .empty-state svg { width: 48px; height: 48px; margin: 0 auto 1rem; opacity: 0.3; }
+        .empty-state p { font-size: 0.85rem; font-weight: 600; }
+
+        /* ===== DOCS GRID ===== */
+        .docs-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
+        .doc-item {
+            background: white;
+            border: 1px solid var(--slate-100);
+            border-radius: 16px;
+            padding: 1.75rem 1.25rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: var(--shadow);
+        }
+        .doc-item:hover { border-color: var(--blue-900); transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+        .doc-item .doc-icon { font-size: 2.25rem; margin-bottom: 0.875rem; display: block; }
+        .doc-item h5 { font-size: 0.75rem; font-weight: 800; text-transform: uppercase; color: var(--slate-700); letter-spacing: 0.03em; }
+        .doc-item p { font-size: 0.7rem; color: var(--slate-400); margin-top: 4px; font-weight: 500; }
+
+        /* ===== PRINT MODAL ===== */
+        .modal-overlay {
+            position: fixed; inset: 0;
+            background: rgba(15,23,42,0.65);
+            backdrop-filter: blur(4px);
+            z-index: 200;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-overlay.open { display: flex; }
+        .modal-card {
+            background: white;
+            border-radius: 24px;
+            padding: 2.5rem;
+            width: 100%;
+            max-width: 560px;
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25);
+            animation: fadeUp 0.25s ease-out;
+        }
+        .modal-title { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 1.25rem; font-weight: 900; color: var(--blue-900); margin-bottom: 1.5rem; }
+        .modal-close { float: right; background: none; border: none; cursor: pointer; color: var(--slate-400); font-size: 1.25rem; }
+
+        /* ===== GRID 2 COL ===== */
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+
+        /* ===== FOOTER ===== */
+        footer {
+            height: 38px;
+            background: white;
+            border-top: 1px solid var(--slate-100);
+            padding: 0 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 9px;
+            color: var(--slate-400);
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+        .footer-status { display: flex; align-items: center; gap: 0.5rem; }
+        .status-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--emerald-500); animation: pulse 2s infinite; }
+        @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.5} }
+
+        /* Search highlight */
+        .search-match { background: #fef9c3; border-radius: 2px; }
+
+        /* Inline action button */
+        .icon-btn {
+            width: 32px; height: 32px;
+            border-radius: 8px;
+            border: none; cursor: pointer;
+            display: inline-flex; align-items: center; justify-content: center;
+            transition: all 0.15s;
+            background: var(--slate-100); color: var(--slate-600);
+        }
+        .icon-btn:hover { background: var(--blue-50); color: var(--blue-900); }
+        .icon-btn svg { width: 14px; height: 14px; }
+
+        /* ===== PRINT preview area ===== */
+        @media print {
+            #sidebar, header, footer, .no-print { display: none !important; }
+            #view-container { padding: 0; overflow: visible; }
+            body { overflow: auto; }
+        }
+
+        /* ===== MOBILE RESPONSIVO ===== */
+        .hamburger {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 6px;
+            color: var(--blue-900);
+        }
+        .hamburger svg { width: 22px; height: 22px; }
+
+        .sidebar-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(15,23,42,0.5);
+            z-index: 40;
+        }
+        .sidebar-overlay.open { display: block; }
+
+        @media (max-width: 768px) {
+            body { overflow: auto; flex-direction: column; height: auto; min-height: 100vh; }
+
+            #sidebar {
+                position: fixed;
+                top: 0; left: 0; bottom: 0;
+                width: 260px;
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+                z-index: 50;
+                height: 100vh;
+                overflow-y: auto;
+            }
+            #sidebar.open { transform: translateX(0); }
+
+            main { flex: 1; display: flex; flex-direction: column; min-height: 100vh; overflow: visible; }
+
+            header {
+                position: sticky;
+                top: 0;
+                z-index: 30;
+                padding: 0 1rem;
+                height: 56px;
+            }
+
+            .hamburger { display: flex; }
+
+            .search-bar { display: none; }
+
+            .header-right { gap: 0.75rem; }
+            .header-date { display: none; }
+            .user-info { display: none; }
+
+            #view-container {
+                padding: 1.25rem 1rem;
+                overflow-y: visible;
+                flex: 1;
+            }
+
+            .page-header {
+                flex-direction: column;
+                gap: 1rem;
+                margin-bottom: 1.25rem;
+            }
+            .page-header .btn { width: 100%; justify-content: center; }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 0.875rem;
+            }
+
+            .stat-card { padding: 1.1rem; border-radius: 14px; }
+            .stat-value { font-size: 1.5rem; }
+
+            .form-grid { grid-template-columns: 1fr; }
+            .form-grid.cols-3 { grid-template-columns: 1fr; }
+            .form-group.full { grid-column: 1; }
+
+            .docs-grid { grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
+
+            /* Tabelas viram scroll horizontal */
+            .data-card { border-radius: 14px; }
+            .data-card table { display: block; overflow-x: auto; white-space: nowrap; -webkit-overflow-scrolling: touch; }
+
+            th { padding: 0.75rem 1rem; }
+            td { padding: 0.75rem 1rem; }
+
+            /* Relatórios grid */
+            #view-relatorios > div:last-child {
+                grid-template-columns: 1fr !important;
+            }
+
+            /* Filtro período */
+            #view-relatorios .data-card > div {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            #view-relatorios input[type="date"] {
+                width: 100% !important;
+            }
+
+            footer {
+                flex-direction: column;
+                gap: 4px;
+                height: auto;
+                padding: 0.75rem 1rem;
+                text-align: center;
+            }
+
+            .form-panel { padding: 1.25rem; }
+            .form-actions { flex-direction: column; }
+            .form-actions .btn { width: 100%; justify-content: center; }
+
+            .item-card { flex-wrap: wrap; gap: 0.75rem; }
+            .item-card-right { width: 100%; justify-content: flex-end; }
+        }
+
+        @media (max-width: 400px) {
+            .stats-grid { grid-template-columns: 1fr 1fr; gap: 0.625rem; }
+            .docs-grid { grid-template-columns: 1fr 1fr; }
+            .stat-value { font-size: 1.35rem; }
+        }
+
+        
+
+        @media (max-width: 768px) {
+            .login-box { padding: 2rem 1.5rem; }
+        }
+
+        /* ===== LOGIN OVERLAY ===== */
+        #login-overlay {
+            position: fixed; inset: 0;
+            background: var(--blue-900);
+            z-index: 9999;
+            display: flex; align-items: center; justify-content: center;
+            padding: 1.5rem;
+        }
+        #login-overlay::before {
+            content: ''; position: absolute; inset: 0;
+            background: radial-gradient(ellipse 60% 50% at 15% 85%, rgba(234,179,8,0.1) 0%, transparent 60%),
+                        radial-gradient(ellipse 50% 60% at 85% 15%, rgba(255,255,255,0.04) 0%, transparent 60%);
+            pointer-events: none;
+        }
+        #login-overlay.hide { display: none; }
+        .login-card {
+            background: white; border-radius: 28px;
+            padding: 3rem 2.75rem; width: 100%; max-width: 420px;
+            box-shadow: 0 40px 80px -20px rgba(0,0,0,0.5);
+            position: relative; z-index: 1; animation: fadeUp 0.4s ease-out;
+        }
+        .login-logo { display: flex; align-items: center; gap: 1rem; margin-bottom: 2.25rem; }
+        .login-logo-box {
+            width: 52px; height: 52px; background: var(--yellow-500); color: var(--blue-900);
+            display: flex; align-items: center; justify-content: center;
+            font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 900; font-size: 1.35rem;
+            border-radius: 14px; box-shadow: 0 4px 16px rgba(234,179,8,0.4); flex-shrink: 0;
+        }
+        .login-logo-text h2 {
+            font-family: 'Plus Jakarta Sans', sans-serif; font-size: 0.9rem; font-weight: 900;
+            color: var(--blue-900); text-transform: uppercase; line-height: 1.2;
+        }
+        .login-logo-text p { font-size: 10px; color: var(--slate-400); font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; margin-top: 2px; }
+        .login-title { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 1.7rem; font-weight: 900; color: var(--blue-900); letter-spacing: -0.03em; line-height: 1.15; margin-bottom: 6px; }
+        .login-subtitle { font-size: 0.83rem; color: var(--slate-500); font-weight: 500; margin-bottom: 2rem; }
+        .login-field { display: flex; flex-direction: column; gap: 0.4rem; margin-bottom: 1rem; }
+        .login-field label { font-size: 9px; font-weight: 800; text-transform: uppercase; color: var(--slate-500); letter-spacing: 0.1em; }
+        .login-field .input-wrap { position: relative; }
+        .login-field .input-icon { position: absolute; left: 0.875rem; top: 50%; transform: translateY(-50%); width: 16px; height: 16px; color: var(--slate-400); pointer-events: none; }
+        .login-field input { padding: 0.75rem 0.875rem 0.75rem 2.75rem; border-radius: 12px; border: 2px solid var(--slate-100); background: var(--slate-50); outline: none; font-family: 'DM Sans', sans-serif; font-weight: 500; font-size: 0.9rem; color: var(--slate-800); width: 100%; transition: all 0.2s; }
+        .login-field input:focus { border-color: var(--blue-900); background: white; box-shadow: 0 0 0 4px rgba(30,58,138,0.08); }
+        .login-field .toggle-pass { position: absolute; right: 0.875rem; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; padding: 0; color: var(--slate-400); display: flex; align-items: center; }
+        .login-field .toggle-pass:hover { color: var(--blue-900); }
+        .login-field .toggle-pass svg { width: 16px; height: 16px; }
+        .login-error { display: none; background: #fef2f2; border: 1px solid #fecaca; border-radius: 10px; padding: 0.7rem 1rem; font-size: 0.8rem; font-weight: 600; color: var(--red-500); margin-bottom: 1rem; align-items: center; gap: 0.5rem; }
+        .login-error.show { display: flex; animation: fadeUp 0.2s ease-out; }
+        .login-error svg { width: 15px; height: 15px; flex-shrink: 0; }
+        .login-btn { width: 100%; padding: 0.875rem; background: var(--blue-900); color: white; border: none; border-radius: 12px; font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 800; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.04em; cursor: pointer; transition: all 0.2s; margin-top: 0.5rem; display: flex; align-items: center; justify-content: center; gap: 0.5rem; }
+        .login-btn:hover:not(:disabled) { background: var(--slate-800); transform: translateY(-1px); box-shadow: 0 8px 20px rgba(30,58,138,0.3); }
+        .login-btn:disabled { opacity: 0.7; cursor: not-allowed; }
+        .login-btn svg { width: 17px; height: 17px; }
+        .login-spinner { width: 17px; height: 17px; border: 2.5px solid rgba(255,255,255,0.3); border-top-color: white; border-radius: 50%; animation: spin 0.7s linear infinite; display: none; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .login-footer-text { margin-top: 1.75rem; text-align: center; font-size: 9px; color: var(--slate-400); font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; }
+        @media (max-width: 480px) {
+            .login-card { padding: 2rem 1.5rem; border-radius: 20px; }
+            .login-title { font-size: 1.4rem; }
+        }
+    </style>
+    <!-- Firebase SDK -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-app.js";
+        import { getFirestore, collection, doc, getDocs, addDoc, deleteDoc, updateDoc, onSnapshot, query, orderBy } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-firestore.js";
+        import { getAuth, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-auth.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyC9Re8fIJitOsmiThVx0V2SAuTJjLf3hTg",
+            authDomain: "erefif-20e2c.firebaseapp.com",
+            projectId: "erefif-20e2c",
+            storageBucket: "erefif-20e2c.firebasestorage.app",
+            messagingSenderId: "883192289689",
+            appId: "1:883192289689:web:e64e163b0d968d655d1b08"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const auth = getAuth(app);
+
+        // Expor globalmente
+        window._db = db;
+        window._auth = auth;
+        window._signIn = signInWithEmailAndPassword;
+        window._signOut = signOut;
+        window._fs = { collection, doc, getDocs, addDoc, deleteDoc, updateDoc, onSnapshot, query, orderBy };
+        window._firebaseReady = true;
+        document.dispatchEvent(new Event('firebase-ready'));
+    </script>
+</head>
+<body>
+
+<!-- ===== LOGIN OVERLAY ===== -->
+<div id="login-overlay">
+    <div class="login-card">
+        <div class="login-logo">
+            <div class="login-logo-box">IF</div>
+            <div class="login-logo-text">
+                <h2>EREF Iva Ferreira</h2>
+                <p>Secretaria Online</p>
+            </div>
+        </div>
+        <h1 class="login-title">Bem-vindo(a) de volta</h1>
+        <p class="login-subtitle">Faça login para acessar o sistema de secretaria.</p>
+        <div class="login-error" id="login-error">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            <span id="login-error-msg">Usuário ou senha incorretos.</span>
+        </div>
+        <div class="login-field">
+            <label>Usuário</label>
+            <div class="input-wrap">
+                <svg class="input-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                <input type="text" id="login-user" placeholder="Digite seu usuário" autocomplete="username" />
+            </div>
+        </div>
+        <div class="login-field">
+            <label>Senha</label>
+            <div class="input-wrap">
+                <svg class="input-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                <input type="password" id="login-pass" placeholder="Digite sua senha" autocomplete="current-password" />
+                <button class="toggle-pass" type="button" onclick="toggleLoginPass()" title="Mostrar/ocultar senha">
+                    <svg id="eye-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                </button>
+            </div>
+        </div>
+        <button class="login-btn" id="login-btn" onclick="doLogin()">
+            <span id="login-btn-text">Entrar no Sistema</span>
+            <svg id="login-btn-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12,5 19,12 12,19"/></svg>
+            <div class="login-spinner" id="login-spinner"></div>
+        </button>
+        <p class="login-footer-text">SGE v3.0 · EREF Iva Ferreira · Pernambuco - PE</p>
+    </div>
+</div>
+
+<!-- SIDEBAR -->
+<aside id="sidebar">
+    <div class="sidebar-header">
+        <div class="logo-box">IF</div>
+        <div class="app-name">
+            <h1>EREF Iva Ferreira</h1>
+            <p>Secretaria Online</p>
+        </div>
+    </div>
+
+    <ul class="nav-list" id="nav-list">
+        <li><div class="nav-section-label">Menu Principal</div></li>
+        <li>
+            <button class="nav-btn active" data-view="dashboard">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+                Dashboard
+            </button>
+        </li>
+        <li>
+            <button class="nav-btn" data-view="oficios">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10,9 9,9 8,9"/></svg>
+                Ofícios Emitidos
+            </button>
+        </li>
+        <li>
+            <button class="nav-btn" data-view="transferencias">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="17,1 21,5 17,9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7,23 3,19 7,15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
+                Transferências
+            </button>
+        </li>
+        <li>
+            <button class="nav-btn" data-view="atendimento">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                Atendimento
+            </button>
+        </li>
+        <li>
+            <button class="nav-btn" data-view="protocolo">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/><path d="M9 14l2 2 4-4"/></svg>
+                Protocolo
+            </button>
+        </li>
+        <li>
+            <button class="nav-btn" data-view="arquivo">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+                Arquivo Digital
+            </button>
+        </li>
+        <li>
+            <button class="nav-btn" data-view="impressoes">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6,9 6,2 18,2 18,9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+                Impressões
+            </button>
+        </li>
+        <li><div class="nav-section-label" style="margin-top:1rem;">Sistema</div></li>
+        <li>
+            <button class="nav-btn" data-view="documentos">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/></svg>
+                Documentos
+            </button>
+        </li>
+        <li>
+            <button class="nav-btn" data-view="relatorios">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7,10 12,15 17,10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                Relatórios
+            </button>
+        </li>
+    </ul>
+
+    <div class="sidebar-footer" id="sidebar-footer">
+        <span style="font-size:9px;opacity:0.35;">Acesso Local Seguro v3.0</span>
+    </div>
+</aside>
+
+<!-- MAIN -->
+<main>
+    <!-- Mobile overlay -->
+    <div class="sidebar-overlay" id="sidebar-overlay" onclick="closeSidebar()"></div>
+
+    <header>
+        <div style="display:flex;align-items:center;gap:0.75rem;">
+            <button class="hamburger" id="hamburger-btn" onclick="toggleSidebar()" aria-label="Menu">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+            </button>
+        <div class="search-bar">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <input type="text" id="global-search" placeholder="Busca global de registros...">
+        </div>
+        </div>
+        <div class="header-right">
+            <div class="header-date">
+                <p id="header-date-text">—</p>
+                <span>Secretaria(a) · Admin Ativo</span>
+            </div>
+            <div class="user-info">
+                <p>Secretário(a)</p>
+                <span>Admin Ativo</span>
+            </div>
+            <div class="avatar">IF</div>
+        </div>
+    </header>
+
+    <div id="view-container">
+
+        <!-- ===== DASHBOARD ===== -->
+        <div class="view active" id="view-dashboard">
+            <div class="page-header">
+                <div class="page-title">
+                    <h2>Dashboard</h2>
+                    <p>Visão geral da secretaria — <span id="dash-date"></span></p>
+                </div>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon blue">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/></svg>
+                    </div>
+                    <div class="stat-value" id="stat-oficios">0</div>
+                    <div class="stat-label">Ofícios Emitidos</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon yellow">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="17,1 21,5 17,9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7,23 3,19 7,15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
+                    </div>
+                    <div class="stat-value" id="stat-transferencias">0</div>
+                    <div class="stat-label">Transferências</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon green">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+                    </div>
+                    <div class="stat-value" id="stat-atendimentos">0</div>
+                    <div class="stat-label">Atendimentos</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon orange">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6,9 6,2 18,2 18,9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+                    </div>
+                    <div class="stat-value" id="stat-impressoes-total">0</div>
+                    <div class="stat-label">Impressões</div>
+                </div>
+            </div>
+
+            <div class="data-card">
+                <div class="card-header">
+                    <h4>📋 Atividade Recente</h4>
+                    <span style="font-size:0.75rem;color:var(--slate-400);font-weight:600;">Últimos registros</span>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Tipo</th>
+                            <th>Descrição</th>
+                            <th>Data</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="recent-tbody">
+                        <tr><td colspan="4" class="empty-state"><p>Nenhuma atividade ainda.</p></td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- ===== OFÍCIOS ===== -->
+        <div class="view" id="view-oficios">
+            <div class="page-header">
+                <div class="page-title">
+                    <h2>Ofícios Emitidos</h2>
+                    <p>Registro e controle de ofícios da secretaria</p>
+                </div>
+                <button class="btn btn-primary" onclick="toggleForm('form-oficio')">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                    Novo Ofício
+                </button>
+            </div>
+
+            <div class="form-panel" id="form-oficio">
+                <div class="form-panel-title">📝 Registrar Novo Ofício</div>
+                <form onsubmit="addOficio(event)">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Número do Ofício</label>
+                            <input type="text" name="numero" placeholder="Ex: 001/2026" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Data</label>
+                            <input type="date" name="data" required>
+                        </div>
+                        <div class="form-group full">
+                            <label>Assunto</label>
+                            <input type="text" name="assunto" placeholder="Descreva o assunto do ofício..." required>
+                        </div>
+                        <div class="form-group">
+                            <label>Destinatário</label>
+                            <input type="text" name="destinatario" placeholder="Ex: Secretaria Municipal de Educação" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Tipo</label>
+                            <select name="tipo">
+                                <option value="Circular">Circular</option>
+                                <option value="Informativo">Informativo</option>
+                                <option value="Solicitação">Solicitação</option>
+                                <option value="Convocação">Convocação</option>
+                                <option value="Resposta">Resposta</option>
+                            </select>
+                        </div>
+                        <div class="form-group full">
+                            <label>Observações</label>
+                            <textarea name="obs" placeholder="Observações adicionais (opcional)..."></textarea>
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-ghost" onclick="toggleForm('form-oficio')">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Salvar Ofício</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="data-card">
+                <div class="card-header">
+                    <h4>📄 Ofícios Registrados</h4>
+                    <span id="count-oficios" style="font-size:0.75rem;color:var(--slate-400);font-weight:700;">0 registros</span>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nº Ofício</th>
+                            <th>Assunto</th>
+                            <th>Destinatário</th>
+                            <th>Tipo</th>
+                            <th>Data</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbody-oficios">
+                        <tr><td colspan="6"><div class="empty-state"><p>Nenhum ofício registrado.</p></div></td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- ===== TRANSFERÊNCIAS ===== -->
+        <div class="view" id="view-transferencias">
+            <div class="page-header">
+                <div class="page-title">
+                    <h2>Transferências</h2>
+                    <p>Entradas e saídas de alunos por transferência</p>
+                </div>
+                <button class="btn btn-primary" onclick="toggleForm('form-transferencia')">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                    Nova Transferência
+                </button>
+            </div>
+
+            <div class="form-panel" id="form-transferencia">
+                <div class="form-panel-title">🔄 Registrar Transferência</div>
+                <form onsubmit="addTransferencia(event)">
+                    <div class="form-grid">
+                        <div class="form-group full">
+                            <label>Nome do Aluno</label>
+                            <input type="text" name="aluno" placeholder="Nome completo do aluno" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Tipo</label>
+                            <select name="tipo" required>
+                                <option value="Saída">Saída (Transferência para outra escola)</option>
+                                <option value="Entrada">Entrada (Transferência de outra escola)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Turma / Ano</label>
+                            <input type="text" name="turma" placeholder="Ex: 5º Ano A" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Escola de Origem/Destino</label>
+                            <input type="text" name="escola" placeholder="Nome da escola" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Data</label>
+                            <input type="date" name="data" required>
+                        </div>
+                        <div class="form-group full">
+                            <label>Observações</label>
+                            <textarea name="obs" placeholder="Observações adicionais..."></textarea>
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-ghost" onclick="toggleForm('form-transferencia')">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Salvar</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="data-card">
+                <div class="card-header">
+                    <h4>🔄 Registros de Transferência</h4>
+                    <span id="count-transferencias" style="font-size:0.75rem;color:var(--slate-400);font-weight:700;">0 registros</span>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Aluno</th>
+                            <th>Tipo</th>
+                            <th>Turma</th>
+                            <th>Escola</th>
+                            <th>Data</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbody-transferencias">
+                        <tr><td colspan="6"><div class="empty-state"><p>Nenhuma transferência registrada.</p></div></td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- ===== ATENDIMENTO ===== -->
+        <div class="view" id="view-atendimento">
+            <div class="page-header">
+                <div class="page-title">
+                    <h2>Atendimento</h2>
+                    <p>Registro de atendimentos realizados na secretaria</p>
+                </div>
+                <button class="btn btn-primary" onclick="toggleForm('form-atendimento')">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                    Novo Atendimento
+                </button>
+            </div>
+
+            <div class="form-panel" id="form-atendimento">
+                <div class="form-panel-title">👥 Registrar Atendimento</div>
+                <form onsubmit="addAtendimento(event)">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Nome do Atendido</label>
+                            <input type="text" name="nome" placeholder="Nome completo" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Tipo de Atendimento</label>
+                            <select name="tipo" required>
+                                <option value="Responsável">Responsável / Pai</option>
+                                <option value="Aluno">Aluno</option>
+                                <option value="Professor">Professor</option>
+                                <option value="Externo">Externo</option>
+                                <option value="Outros">Outros</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Horário</label>
+                            <input type="time" name="horario" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Data</label>
+                            <input type="date" name="data" required>
+                        </div>
+                        <div class="form-group full">
+                            <label>Motivo / Descrição</label>
+                            <textarea name="descricao" placeholder="Descreva o motivo do atendimento..." required></textarea>
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-ghost" onclick="toggleForm('form-atendimento')">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Registrar</button>
+                    </div>
+                </form>
+            </div>
+
+            <div id="list-atendimentos">
+                <div class="empty-state">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+                    <p>Nenhum atendimento registrado.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== PROTOCOLO ===== -->
+        <div class="view" id="view-protocolo">
+            <div class="page-header">
+                <div class="page-title">
+                    <h2>Protocolo</h2>
+                    <p>Controle de documentos protocolados na secretaria</p>
+                </div>
+                <button class="btn btn-primary" onclick="toggleForm('form-protocolo')">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                    Novo Protocolo
+                </button>
+            </div>
+
+            <div class="form-panel" id="form-protocolo">
+                <div class="form-panel-title">📋 Registrar Protocolo</div>
+                <form onsubmit="addProtocolo(event)">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Tipo de Documento</label>
+                            <select name="tipoDoc" required>
+                                <option value="Requerimento">Requerimento</option>
+                                <option value="Declaração">Declaração</option>
+                                <option value="Histórico Escolar">Histórico Escolar</option>
+                                <option value="Atestado de Matrícula">Atestado de Matrícula</option>
+                                <option value="Ofício">Ofício</option>
+                                <option value="Carta">Carta</option>
+                                <option value="Outros">Outros</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Solicitante</label>
+                            <input type="text" name="solicitante" placeholder="Nome do solicitante" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Status</label>
+                            <select name="status">
+                                <option value="Pendente">Pendente</option>
+                                <option value="Em Andamento">Em Andamento</option>
+                                <option value="Concluído">Concluído</option>
+                                <option value="Arquivado">Arquivado</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Data</label>
+                            <input type="date" name="data" required>
+                        </div>
+                        <div class="form-group full">
+                            <label>Descrição</label>
+                            <textarea name="descricao" placeholder="Detalhes do protocolo..."></textarea>
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-ghost" onclick="toggleForm('form-protocolo')">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Protocolar</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="data-card">
+                <div class="card-header">
+                    <h4>📋 Protocolos Registrados</h4>
+                    <span id="count-protocolos" style="font-size:0.75rem;color:var(--slate-400);font-weight:700;">0 registros</span>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nº Protocolo</th>
+                            <th>Documento</th>
+                            <th>Solicitante</th>
+                            <th>Data</th>
+                            <th>Status</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbody-protocolos">
+                        <tr><td colspan="6"><div class="empty-state"><p>Nenhum protocolo registrado.</p></div></td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- ===== ARQUIVO DIGITAL ===== -->
+        <div class="view" id="view-arquivo">
+            <div class="page-header">
+                <div class="page-title">
+                    <h2>Arquivo Digital</h2>
+                    <p>Repositório de documentos digitais da secretaria</p>
+                </div>
+                <button class="btn btn-primary" onclick="toggleForm('form-arquivo')">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                    Novo Arquivo
+                </button>
+            </div>
+
+            <div class="form-panel" id="form-arquivo">
+                <div class="form-panel-title">📁 Cadastrar Documento Digital</div>
+                <form onsubmit="addArquivo(event)">
+                    <div class="form-grid">
+                        <div class="form-group full">
+                            <label>Nome do Documento</label>
+                            <input type="text" name="nome" placeholder="Ex: Ata de Reunião Pedagógica - Março 2026" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Categoria</label>
+                            <select name="categoria" required>
+                                <option value="Histórico Escolar">Histórico Escolar</option>
+                                <option value="Ata">Ata de Reunião</option>
+                                <option value="Plano de Aula">Plano de Aula</option>
+                                <option value="Relatório">Relatório</option>
+                                <option value="Correspondência">Correspondência</option>
+                                <option value="Ficha do Aluno">Ficha do Aluno</option>
+                                <option value="Outros">Outros</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Ano de Referência</label>
+                            <input type="number" name="ano" placeholder="2026" min="2000" max="2099" required>
+                        </div>
+                        <div class="form-group full">
+                            <label>Link / URL do Documento (Google Drive, etc.)</label>
+                            <input type="url" name="url" placeholder="https://drive.google.com/...">
+                        </div>
+                        <div class="form-group full">
+                            <label>Ou Anexar PDF diretamente</label>
+                            <input type="file" name="pdffile" accept=".pdf" id="arquivo-pdf-input"
+                                style="padding:0.55rem 0.875rem;border-radius:10px;border:2px dashed var(--slate-200);background:var(--slate-50);font-family:'DM Sans',sans-serif;font-size:0.8rem;cursor:pointer;">
+                            <p style="font-size:10px;color:var(--slate-400);margin-top:4px;">O PDF será convertido em link para visualização. Tamanho máximo: 5MB</p>
+                        </div>
+                        <div class="form-group full">
+                            <label>Observações</label>
+                            <textarea name="obs" placeholder="Informações adicionais sobre o documento..."></textarea>
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-ghost" onclick="toggleForm('form-arquivo')">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Cadastrar</button>
+                    </div>
+                </form>
+            </div>
+
+            <div id="list-arquivos">
+                <div class="empty-state">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+                    <p>Nenhum documento cadastrado.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== IMPRESSÕES ===== -->
+        <div class="view" id="view-impressoes">
+            <div class="page-header">
+                <div class="page-title">
+                    <h2>Controle de Impressões</h2>
+                    <p>Registro de impressões realizadas na secretaria</p>
+                </div>
+                <button class="btn btn-primary" onclick="toggleForm('form-impressao')">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                    Registrar Impressão
+                </button>
+            </div>
+
+            <div class="form-panel" id="form-impressao">
+                <div class="form-panel-title">🖨️ Registrar Impressão</div>
+                <form onsubmit="addImpressao(event)">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Responsável / Usuário</label>
+                            <input type="text" name="usuario" placeholder="Nome do responsável" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Quantidade de Páginas</label>
+                            <input type="number" name="quantidade" min="1" placeholder="Ex: 10" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Tipo</label>
+                            <select name="tipo">
+                                <option value="Preto e Branco">Preto e Branco</option>
+                                <option value="Colorido">Colorido</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Data</label>
+                            <input type="date" name="data" required>
+                        </div>
+                        <div class="form-group full">
+                            <label>Descrição / Finalidade</label>
+                            <input type="text" name="descricao" placeholder="Ex: Avaliações do 3º Ano B" required>
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-ghost" onclick="toggleForm('form-impressao')">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Registrar</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="data-card">
+                <div class="card-header">
+                    <h4>🖨️ Impressões Registradas</h4>
+                    <span id="count-impressoes" style="font-size:0.75rem;color:var(--slate-400);font-weight:700;">0 registros · 0 páginas</span>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Responsável</th>
+                            <th>Descrição</th>
+                            <th>Tipo</th>
+                            <th>Páginas</th>
+                            <th>Data</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbody-impressoes">
+                        <tr><td colspan="6"><div class="empty-state"><p>Nenhuma impressão registrada.</p></div></td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- ===== DOCUMENTOS ===== -->
+        <div class="view" id="view-documentos">
+            <div class="page-header">
+                <div class="page-title">
+                    <h2>Documentos</h2>
+                    <p>Modelos e templates de documentos escolares</p>
+                </div>
+            </div>
+
+            <div class="docs-grid">
+                <div class="doc-item" onclick="openDocModal('Declaração de Matrícula')">
+                    <span class="doc-icon">📋</span>
+                    <h5>Declaração de Matrícula</h5>
+                    <p>Comprovante oficial</p>
+                </div>
+                <div class="doc-item" onclick="openDocModal('Histórico Escolar')">
+                    <span class="doc-icon">📚</span>
+                    <h5>Histórico Escolar</h5>
+                    <p>Registro acadêmico</p>
+                </div>
+                <div class="doc-item" onclick="openDocModal('Atestado de Frequência')">
+                    <span class="doc-icon">✅</span>
+                    <h5>Atestado de Frequência</h5>
+                    <p>Frequência do aluno</p>
+                </div>
+                <div class="doc-item" onclick="openDocModal('Ficha de Matrícula')">
+                    <span class="doc-icon">📝</span>
+                    <h5>Ficha de Matrícula</h5>
+                    <p>Cadastro do aluno</p>
+                </div>
+                <div class="doc-item" onclick="openDocModal('Ofício Padrão')">
+                    <span class="doc-icon">📄</span>
+                    <h5>Ofício Padrão</h5>
+                    <p>Comunicação oficial</p>
+                </div>
+                <div class="doc-item" onclick="openDocModal('Ata de Reunião')">
+                    <span class="doc-icon">🗒️</span>
+                    <h5>Ata de Reunião</h5>
+                    <p>Registro de reuniões</p>
+                </div>
+                <div class="doc-item" onclick="openDocModal('Requerimento')">
+                    <span class="doc-icon">📮</span>
+                    <h5>Requerimento</h5>
+                    <p>Solicitação formal</p>
+                </div>
+                <div class="doc-item" onclick="openDocModal('Autorização de Saída')">
+                    <span class="doc-icon">🚌</span>
+                    <h5>Autorização de Saída</h5>
+                    <p>Saída de aluno</p>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- ===== RELATÓRIOS ===== -->
+        <div class="view" id="view-relatorios">
+            <div class="page-header">
+                <div class="page-title">
+                    <h2>Relatórios</h2>
+                    <p>Exporte os dados da secretaria em CSV (abre no Excel)</p>
+                </div>
+            </div>
+
+            <div class="data-card" style="margin-bottom:1.5rem;">
+                <div class="card-header"><h4>🗓️ Filtrar por Período</h4></div>
+                <div style="padding:1.25rem 1.75rem;display:flex;align-items:flex-end;gap:1rem;flex-wrap:wrap;">
+                    <div class="form-group">
+                        <label>Data Início</label>
+                        <input type="date" id="rel-inicio" style="width:180px;">
+                    </div>
+                    <div class="form-group">
+                        <label>Data Fim</label>
+                        <input type="date" id="rel-fim" style="width:180px;">
+                    </div>
+                    <button class="btn btn-ghost" onclick="limparFiltro()">Limpar filtro</button>
+                </div>
+            </div>
+
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem;">
+
+                <div class="data-card">
+                    <div class="card-header"><h4>📄 Ofícios Emitidos</h4></div>
+                    <div style="padding:1.5rem;">
+                        <p style="font-size:0.83rem;color:var(--slate-500);margin-bottom:1rem;">Exporta todos os ofícios com número, assunto, destinatário, tipo e data.</p>
+                        <div style="background:var(--slate-50);border-radius:10px;padding:1rem;margin-bottom:1.25rem;text-align:center;">
+                            <div id="rel-count-oficios" style="font-size:2rem;font-weight:900;color:var(--blue-900);">0</div>
+                            <div style="font-size:9px;font-weight:800;text-transform:uppercase;color:var(--slate-400);">registros</div>
+                        </div>
+                        <button class="btn btn-primary" style="width:100%;justify-content:center;" onclick="downloadCSV('oficios')">⬇️ Baixar PDF — Ofícios</button>
+                    </div>
+                </div>
+
+                <div class="data-card">
+                    <div class="card-header"><h4>🖨️ Impressões</h4></div>
+                    <div style="padding:1.5rem;">
+                        <p style="font-size:0.83rem;color:var(--slate-500);margin-bottom:1rem;">Exporta os registros de impressão com responsável, descrição, tipo, páginas e data.</p>
+                        <div style="background:var(--slate-50);border-radius:10px;padding:1rem;margin-bottom:1.25rem;text-align:center;">
+                            <div id="rel-count-impressoes" style="font-size:2rem;font-weight:900;color:var(--blue-900);">0</div>
+                            <div style="font-size:9px;font-weight:800;text-transform:uppercase;color:var(--slate-400);">páginas impressas</div>
+                        </div>
+                        <button class="btn btn-primary" style="width:100%;justify-content:center;" onclick="downloadCSV('impressoes')">⬇️ Baixar PDF — Impressões</button>
+                    </div>
+                </div>
+
+                <div class="data-card">
+                    <div class="card-header"><h4>🔄 Transferências</h4></div>
+                    <div style="padding:1.5rem;">
+                        <p style="font-size:0.83rem;color:var(--slate-500);margin-bottom:1rem;">Exporta as transferências com aluno, tipo, turma, escola e data.</p>
+                        <div style="background:var(--slate-50);border-radius:10px;padding:1rem;margin-bottom:1.25rem;text-align:center;">
+                            <div id="rel-count-transferencias" style="font-size:2rem;font-weight:900;color:var(--blue-900);">0</div>
+                            <div style="font-size:9px;font-weight:800;text-transform:uppercase;color:var(--slate-400);">registros</div>
+                        </div>
+                        <button class="btn btn-primary" style="width:100%;justify-content:center;" onclick="downloadCSV('transferencias')">⬇️ Baixar PDF — Transferências</button>
+                    </div>
+                </div>
+
+                <div class="data-card">
+                    <div class="card-header"><h4>👥 Atendimentos</h4></div>
+                    <div style="padding:1.5rem;">
+                        <p style="font-size:0.83rem;color:var(--slate-500);margin-bottom:1rem;">Exporta os atendimentos com nome, tipo, descrição, horário e data.</p>
+                        <div style="background:var(--slate-50);border-radius:10px;padding:1rem;margin-bottom:1.25rem;text-align:center;">
+                            <div id="rel-count-atendimentos" style="font-size:2rem;font-weight:900;color:var(--blue-900);">0</div>
+                            <div style="font-size:9px;font-weight:800;text-transform:uppercase;color:var(--slate-400);">registros</div>
+                        </div>
+                        <button class="btn btn-primary" style="width:100%;justify-content:center;" onclick="downloadCSV('atendimentos')">⬇️ Baixar PDF — Atendimentos</button>
+                    </div>
+                </div>
+
+                <div class="data-card">
+                    <div class="card-header"><h4>📋 Protocolos</h4></div>
+                    <div style="padding:1.5rem;">
+                        <p style="font-size:0.83rem;color:var(--slate-500);margin-bottom:1rem;">Exporta os protocolos com número, documento, solicitante, status e data.</p>
+                        <div style="background:var(--slate-50);border-radius:10px;padding:1rem;margin-bottom:1.25rem;text-align:center;">
+                            <div id="rel-count-protocolos" style="font-size:2rem;font-weight:900;color:var(--blue-900);">0</div>
+                            <div style="font-size:9px;font-weight:800;text-transform:uppercase;color:var(--slate-400);">registros</div>
+                        </div>
+                        <button class="btn btn-primary" style="width:100%;justify-content:center;" onclick="downloadCSV('protocolos')">⬇️ Baixar PDF — Protocolos</button>
+                    </div>
+                </div>
+
+                <div class="data-card" style="background:var(--blue-900);border-color:var(--blue-900);">
+                    <div class="card-header" style="border-color:rgba(255,255,255,0.1);"><h4 style="color:rgba(255,255,255,0.7);">📦 Relatório Completo</h4></div>
+                    <div style="padding:1.5rem;">
+                        <p style="font-size:0.83rem;color:rgba(255,255,255,0.6);margin-bottom:1rem;">Exporta todos os módulos em um único arquivo CSV consolidado.</p>
+                        <div style="background:rgba(255,255,255,0.08);border-radius:10px;padding:1rem;margin-bottom:1.25rem;text-align:center;">
+                            <div id="rel-count-total" style="font-size:2rem;font-weight:900;color:var(--yellow-500);">0</div>
+                            <div style="font-size:9px;font-weight:800;text-transform:uppercase;color:rgba(255,255,255,0.4);">total de registros</div>
+                        </div>
+                        <button class="btn btn-yellow" style="width:100%;justify-content:center;" onclick="downloadCSV('todos')">⬇️ Baixar PDF Completo</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+            <div class="data-card">
+                <div class="card-header">
+                    <h4>👥 Usuários Cadastrados</h4>
+                    <span id="count-usuarios" style="font-size:0.75rem;color:var(--slate-400);font-weight:700;"></span>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>Usuário</th>
+                            <th>Perfil</th>
+                            <th>Cadastrado em</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbody-usuarios"></tbody>
+                </table>
+            </div>
+        </div>
+
+    </div><!-- end view-container -->
+
+    <footer>
+        <span>© 2026 EREF Iva Ferreira · Gestão Administrativa Interna</span>
+        <div class="footer-status">
+            <div class="status-dot"></div>
+            <span style="color:var(--emerald-600);font-weight:800;">SERVIDOR LOCAL CONECTADO</span>
+        </div>
+    </footer>
+</main>
+
+<!-- DOC MODAL -->
+<div class="modal-overlay" id="doc-modal">
+    <div class="modal-card">
+        <button class="modal-close" onclick="closeDocModal()">✕</button>
+        <div class="modal-title" id="doc-modal-title">Documento</div>
+        <div id="doc-modal-body"></div>
+        <div class="form-actions" style="margin-top:1.5rem;">
+            <button class="btn btn-ghost" onclick="closeDocModal()">Fechar</button>
+            <button class="btn btn-primary" onclick="printDoc()">🖨️ Imprimir</button>
+        </div>
+    </div>
+</div>
+
+<script>
+// ===== STATE =====
+let db = { oficios: [], transferencias: [], atendimentos: [], protocolos: [], arquivos: [], impressoes: [] };
+let _firestore = null;
+let _fsApi = null;
+
+// Indicador de conexão
+function setConnectionStatus(online) {
+    const dot = document.querySelector('.status-dot');
+    const txt = dot ? dot.nextElementSibling : null;
+    if (dot) dot.style.background = online ? 'var(--emerald-500)' : '#f59e0b';
+    if (txt) txt.textContent = online ? 'SERVIDOR LOCAL CONECTADO' : 'SINCRONIZANDO...';
+}
+
+async function loadCollection(name) {
+    try {
+        const { collection, getDocs, query, orderBy } = _fsApi;
+        const q = query(collection(_firestore, name));
+        const snap = await getDocs(q);
+        db[name] = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+    } catch(e) {
+        console.warn('Erro ao carregar', name, e);
+    }
+}
+
+async function loadDB() {
+    if (!_firestore) return;
+    setConnectionStatus(false);
+    await Promise.all(['oficios','transferencias','atendimentos','protocolos','arquivos','impressoes'].map(loadCollection));
+    setConnectionStatus(true);
+    updateDashboard();
+}
+
+async function saveDB() {
+    // Não faz nada — salvamento é feito individualmente por addItem/deleteItem
+}
+
+async function addItem(colName, item) {
+    if (!_firestore) return item;
+    const { collection, addDoc } = _fsApi;
+    const { id, ...data } = item;
+    const ref = await addDoc(collection(_firestore, colName), data);
+    return { id: ref.id, ...data };
+}
+
+async function removeItem(colName, id) {
+    if (!_firestore) return;
+    const { doc, deleteDoc } = _fsApi;
+    await deleteDoc(doc(_firestore, colName, id));
+}
+
+// ===== NAVIGATION =====
+function navigate(viewId) {
+    document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('view-' + viewId).classList.add('active');
+    document.querySelector(`[data-view="${viewId}"]`).classList.add('active');
+
+    const renders = {
+        dashboard: updateDashboard,
+        oficios: renderOficios,
+        transferencias: renderTransferencias,
+        atendimento: renderAtendimentos,
+        protocolo: renderProtocolos,
+        arquivo: renderArquivos,
+        impressoes: renderImpressoes,
+        relatorios: renderRelatorios
+    };
+    if (renders[viewId]) renders[viewId]();
+}
+
+// ===== FORM TOGGLE =====
+function toggleForm(id) {
+    const f = document.getElementById(id);
+    f.classList.toggle('open');
+    if (f.classList.contains('open')) f.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// ===== DELETE =====
+async function deleteItem(colName, id, renderFn) {
+    if (!confirm('Remover este registro?')) return;
+    await removeItem(colName, id);
+    db[colName] = db[colName].filter(i => i.id !== id);
+    renderFn();
+    updateDashboard();
+}
+
+// ===== FORMAT DATE =====
+function fmtDate(iso) {
+    if (!iso) return '—';
+    const d = new Date(iso + (iso.includes('T') ? '' : 'T00:00:00'));
+    return d.toLocaleDateString('pt-BR');
+}
+
+// ===== DASHBOARD =====
+function updateDashboard() {
+    document.getElementById('stat-oficios').textContent = db.oficios.length;
+    document.getElementById('stat-transferencias').textContent = db.transferencias.length;
+    document.getElementById('stat-atendimentos').textContent = db.atendimentos.length;
+    const totalPags = db.impressoes.reduce((acc, i) => acc + parseInt(i.quantidade || 0), 0);
+    document.getElementById('stat-impressoes-total').textContent = totalPags;
+
+    const all = [
+        ...db.oficios.map(o => ({ tipo: 'OFÍCIO', desc: o.assunto, data: o.data, status: 'Emitido' })),
+        ...db.transferencias.map(t => ({ tipo: 'TRANSFER.', desc: t.aluno, data: t.data, status: t.tipo })),
+        ...db.atendimentos.map(a => ({ tipo: 'ATEND.', desc: a.nome, data: a.data, status: 'Concluído' })),
+        ...db.protocolos.map(p => ({ tipo: 'PROTOCOLO', desc: p.solicitante, data: p.data, status: p.status })),
+        ...db.impressoes.map(i => ({ tipo: 'IMPRESSÃO', desc: i.descricao, data: i.data, status: i.tipo }))
+    ].sort((a, b) => new Date(b.data) - new Date(a.data)).slice(0, 8);
+
+    const tbody = document.getElementById('recent-tbody');
+    if (!all.length) {
+        tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;padding:2rem;color:var(--slate-400);font-size:0.83rem;">Nenhuma atividade ainda. Comece registrando dados nos módulos.</td></tr>';
+        return;
+    }
+    tbody.innerHTML = all.map(item => {
+        const colors = { 'OFÍCIO': 'badge-blue', 'TRANSFER.': 'badge-yellow', 'ATEND.': 'badge-green', 'PROTOCOLO': 'badge-orange', 'IMPRESSÃO': 'badge-gray' };
+        return `<tr>
+            <td><span class="badge ${colors[item.tipo] || 'badge-gray'}">${item.tipo}</span></td>
+            <td style="font-weight:600;">${item.desc}</td>
+            <td>${fmtDate(item.data)}</td>
+            <td><span class="badge badge-gray">${item.status}</span></td>
+        </tr>`;
+    }).join('');
+}
+
+// ===== OFÍCIOS =====
+async function addOficio(e) {
+    e.preventDefault();
+    const f = e.target;
+    const item = { numero: f.numero.value, assunto: f.assunto.value, destinatario: f.destinatario.value, tipo: f.tipo.value, obs: f.obs.value, data: f.data.value };
+    let saved;
+    try {
+        saved = await addItem('oficios', item);
+    } catch(err) {
+        console.error('Erro ao salvar:', err);
+        alert('Erro ao salvar. Verifique sua conexão.');
+        return;
+    }
+    db.oficios.unshift(saved);
+    f.reset(); toggleForm('form-oficio'); renderOficios(); updateDashboard();
+}
+function renderOficios() {
+    const tbody = document.getElementById('tbody-oficios');
+    document.getElementById('count-oficios').textContent = db.oficios.length + ' registros';
+    if (!db.oficios.length) { tbody.innerHTML = '<tr><td colspan="6"><div class="empty-state"><p>Nenhum ofício registrado.</p></div></td></tr>'; return; }
+    tbody.innerHTML = db.oficios.map(o => `<tr>
+        <td><strong>${o.numero}</strong></td>
+        <td>${o.assunto}</td>
+        <td>${o.destinatario}</td>
+        <td><span class="badge badge-blue">${o.tipo}</span></td>
+        <td>${fmtDate(o.data)}</td>
+        <td><button class="icon-btn" onclick="deleteItem('oficios','${o.id}',renderOficios)" title="Remover">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3,6 5,6 21,6"/><path d="M19,6v14a2,2,0,0,1-2,2H7a2,2,0,0,1-2-2V6m3,0V4a2,2,0,0,1,2-2h4a2,2,0,0,1,2,2v2"/></svg>
+        </button></td>
+    </tr>`).join('');
+}
+
+// ===== TRANSFERÊNCIAS =====
+async function addTransferencia(e) {
+    e.preventDefault();
+    const f = e.target;
+    const item = { aluno: f.aluno.value, tipo: f.tipo.value, turma: f.turma.value, escola: f.escola.value, obs: f.obs.value, data: f.data.value };
+    let saved;
+    try {
+        saved = await addItem('transferencias', item);
+    } catch(err) {
+        console.error('Erro ao salvar:', err);
+        alert('Erro ao salvar. Verifique sua conexão.');
+        return;
+    }
+    db.transferencias.unshift(saved);
+    f.reset(); toggleForm('form-transferencia'); renderTransferencias(); updateDashboard();
+}
+function renderTransferencias() {
+    const tbody = document.getElementById('tbody-transferencias');
+    document.getElementById('count-transferencias').textContent = db.transferencias.length + ' registros';
+    if (!db.transferencias.length) { tbody.innerHTML = '<tr><td colspan="6"><div class="empty-state"><p>Nenhuma transferência registrada.</p></div></td></tr>'; return; }
+    tbody.innerHTML = db.transferencias.map(t => `<tr>
+        <td><strong>${t.aluno}</strong></td>
+        <td><span class="badge ${t.tipo === 'Entrada' ? 'badge-green' : 'badge-orange'}">${t.tipo}</span></td>
+        <td>${t.turma}</td>
+        <td>${t.escola}</td>
+        <td>${fmtDate(t.data)}</td>
+        <td><button class="icon-btn" onclick="deleteItem('transferencias','${t.id}',renderTransferencias)" title="Remover">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3,6 5,6 21,6"/><path d="M19,6v14a2,2,0,0,1-2,2H7a2,2,0,0,1-2-2V6m3,0V4a2,2,0,0,1,2-2h4a2,2,0,0,1,2,2v2"/></svg>
+        </button></td>
+    </tr>`).join('');
+}
+
+// ===== ATENDIMENTOS =====
+async function addAtendimento(e) {
+    e.preventDefault();
+    const f = e.target;
+    const item = { nome: f.nome.value, tipo: f.tipo.value, horario: f.horario.value, descricao: f.descricao.value, data: f.data.value };
+    let saved;
+    try {
+        saved = await addItem('atendimentos', item);
+    } catch(err) {
+        console.error('Erro ao salvar:', err);
+        alert('Erro ao salvar. Verifique sua conexão.');
+        return;
+    }
+    db.atendimentos.unshift(saved);
+    f.reset(); toggleForm('form-atendimento'); renderAtendimentos(); updateDashboard();
+}
+function renderAtendimentos() {
+    const el = document.getElementById('list-atendimentos');
+    if (!db.atendimentos.length) {
+        el.innerHTML = `<div class="empty-state"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg><p>Nenhum atendimento registrado.</p></div>`;
+        return;
+    }
+    el.innerHTML = db.atendimentos.map(a => `
+        <div class="item-card">
+            <div class="item-card-left">
+                <div class="item-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+                </div>
+                <div>
+                    <div class="item-title">${a.nome}</div>
+                    <div class="item-sub">${a.descricao} · ${fmtDate(a.data)} ${a.horario ? '· ' + a.horario : ''}</div>
+                </div>
+            </div>
+            <div class="item-card-right">
+                <span class="badge badge-blue">${a.tipo}</span>
+                <button class="icon-btn" onclick="deleteItem('atendimentos','${a.id}',renderAtendimentos)">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3,6 5,6 21,6"/><path d="M19,6v14a2,2,0,0,1-2,2H7a2,2,0,0,1-2-2V6m3,0V4a2,2,0,0,1,2-2h4a2,2,0,0,1,2,2v2"/></svg>
+                </button>
+            </div>
+        </div>
+    `).join('');
+}
+
+// ===== PROTOCOLOS =====
+async function addProtocolo(e) {
+    e.preventDefault();
+    const f = e.target;
+    // f.status conflicts with HTMLFormElement.status - use elements[] instead
+    const statusEl = f.elements['status'] || f.querySelector('[name="status"]');
+    const statusVal = statusEl ? statusEl.value : 'Pendente';
+    const num = 'PRT-' + String(db.protocolos.length + 1).padStart(4, '0');
+    const item = { 
+        numero: num, 
+        tipoDoc: f.tipoDoc.value, 
+        solicitante: f.solicitante.value, 
+        status: statusVal, 
+        descricao: f.descricao.value, 
+        data: f.data.value 
+    };
+    try {
+        const saved = await addItem('protocolos', item);
+        db.protocolos.unshift(saved);
+        f.reset(); 
+        toggleForm('form-protocolo'); 
+        renderProtocolos(); 
+        updateDashboard();
+    } catch(err) {
+        console.error('Erro ao protocolar:', err);
+        alert('Erro ao salvar protocolo. Verifique sua conexão e tente novamente.');
+    }
+}
+function renderProtocolos() {
+    const tbody = document.getElementById('tbody-protocolos');
+    document.getElementById('count-protocolos').textContent = db.protocolos.length + ' registros';
+    if (!db.protocolos.length) { tbody.innerHTML = '<tr><td colspan="6"><div class="empty-state"><p>Nenhum protocolo registrado.</p></div></td></tr>'; return; }
+    const statusColors = { 'Concluído': 'badge-green', 'Pendente': 'badge-yellow', 'Em Andamento': 'badge-orange', 'Arquivado': 'badge-gray' };
+    tbody.innerHTML = db.protocolos.map(p => `<tr>
+        <td><strong style="font-family:'Syne',sans-serif;">${p.numero}</strong></td>
+        <td>${p.tipoDoc}</td>
+        <td>${p.solicitante}</td>
+        <td>${fmtDate(p.data)}</td>
+        <td>
+            <select onchange="updateProtocoloStatus('${p.id}', this.value)" style="padding:5px 8px;border-radius:8px;border:2px solid #e2e8f0;background:#f8fafc;font-size:11px;font-weight:700;cursor:pointer;outline:none;">
+                <option value="Pendente" ${p.status==='Pendente'?'selected':''}>⏳ Pendente</option>
+                <option value="Em Andamento" ${p.status==='Em Andamento'?'selected':''}>🔄 Em Andamento</option>
+                <option value="Concluído" ${p.status==='Concluído'?'selected':''}>✅ Concluído</option>
+                <option value="Arquivado" ${p.status==='Arquivado'?'selected':''}>📦 Arquivado</option>
+            </select>
+        </td>
+        <td><button class="icon-btn" onclick="deleteItem('protocolos','${p.id}',renderProtocolos)" title="Remover">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3,6 5,6 21,6"/><path d="M19,6v14a2,2,0,0,1-2,2H7a2,2,0,0,1-2-2V6m3,0V4a2,2,0,0,1,2-2h4a2,2,0,0,1,2,2v2"/></svg>
+        </button></td>
+    </tr>`).join('');
+}
+
+// ===== UPDATE PROTOCOLO STATUS =====
+async function updateProtocoloStatus(id, novoStatus) {
+    const idx = db.protocolos.findIndex(p => p.id === id);
+    if (idx === -1) return;
+    db.protocolos[idx].status = novoStatus;
+    try {
+        if (_fsApi && _fsApi.updateDoc) {
+            const { doc, updateDoc } = _fsApi;
+            await updateDoc(doc(_firestore, 'protocolos', id), { status: novoStatus });
+        } else {
+            // Fallback: remove and re-add
+            await removeItem('protocolos', id);
+            const { id: _, ...data } = db.protocolos[idx];
+            await addItem('protocolos', db.protocolos[idx]);
+        }
+    } catch(e) { console.warn('Erro ao atualizar status:', e); }
+    renderProtocolos();
+    updateDashboard();
+}
+
+// ===== ARQUIVOS =====
+async function addArquivo(e) {
+    e.preventDefault();
+    const f = e.target;
+    const pdfInput = document.getElementById('arquivo-pdf-input');
+    const file = pdfInput && pdfInput.files[0];
+
+    let finalUrl = f.url.value;
+
+    if (file) {
+        if (file.size > 5 * 1024 * 1024) {
+            alert('O arquivo PDF é muito grande! Máximo 5MB.');
+            return;
+        }
+        // Convert PDF to base64 data URL for local storage/display
+        finalUrl = await new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = e => resolve(e.target.result);
+            reader.onerror = reject;
+            reader.readAsDataURL(file);
+        });
+    }
+
+    const item = { 
+        nome: f.nome.value, 
+        categoria: f.categoria.value, 
+        ano: f.ano.value, 
+        url: finalUrl, 
+        obs: f.obs.value, 
+        tipo_arquivo: file ? 'pdf' : 'link',
+        cadastrado: new Date().toISOString().split('T')[0] 
+    };
+    let saved;
+    try {
+        saved = await addItem('arquivos', item);
+    } catch(err) {
+        console.error('Erro ao salvar:', err);
+        alert('Erro ao salvar. Verifique sua conexão.');
+        return;
+    }
+    db.arquivos.unshift(saved);
+    f.reset(); toggleForm('form-arquivo'); renderArquivos();
+}
+function renderArquivos() {
+    const el = document.getElementById('list-arquivos');
+    if (!db.arquivos.length) {
+        el.innerHTML = `<div class="empty-state"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg><p>Nenhum documento cadastrado.</p></div>`;
+        return;
+    }
+    el.innerHTML = db.arquivos.map(a => `
+        <div class="item-card">
+            <div class="item-card-left">
+                <div class="item-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/></svg>
+                </div>
+                <div>
+                    <div class="item-title">${a.nome}</div>
+                    <div class="item-sub">${a.categoria} · Ano ${a.ano} · ${a.tipo_arquivo === 'pdf' ? '📄 PDF Anexado' : '🔗 Link'} · Cadastrado em ${fmtDate(a.cadastrado)}</div>
+                </div>
+            </div>
+            <div class="item-card-right">
+                ${a.url ? `<a href="${a.url}" target="_blank" class="btn btn-ghost" style="padding:0.4rem 0.75rem;font-size:0.75rem;">${a.tipo_arquivo === 'pdf' ? '📄 Ver PDF' : '🔗 Abrir Link'}</a>` : ''}
+                <button class="icon-btn" onclick="deleteItem('arquivos','${a.id}',renderArquivos)">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3,6 5,6 21,6"/><path d="M19,6v14a2,2,0,0,1-2,2H7a2,2,0,0,1-2-2V6m3,0V4a2,2,0,0,1,2-2h4a2,2,0,0,1,2,2v2"/></svg>
+                </button>
+            </div>
+        </div>
+    `).join('');
+}
+
+// ===== IMPRESSÕES =====
+async function addImpressao(e) {
+    e.preventDefault();
+    const f = e.target;
+    const item = { usuario: f.usuario.value, quantidade: parseInt(f.quantidade.value), tipo: f.tipo.value, descricao: f.descricao.value, data: f.data.value };
+    let saved;
+    try {
+        saved = await addItem('impressoes', item);
+    } catch(err) {
+        console.error('Erro ao salvar:', err);
+        alert('Erro ao salvar. Verifique sua conexão.');
+        return;
+    }
+    db.impressoes.unshift(saved);
+    f.reset(); toggleForm('form-impressao'); renderImpressoes(); updateDashboard();
+}
+function renderImpressoes() {
+    const tbody = document.getElementById('tbody-impressoes');
+    const total = db.impressoes.reduce((acc, i) => acc + parseInt(i.quantidade || 0), 0);
+    document.getElementById('count-impressoes').textContent = db.impressoes.length + ' registros · ' + total + ' páginas';
+    if (!db.impressoes.length) { tbody.innerHTML = '<tr><td colspan="6"><div class="empty-state"><p>Nenhuma impressão registrada.</p></div></td></tr>'; return; }
+    tbody.innerHTML = db.impressoes.map(i => `<tr>
+        <td><strong>${i.usuario}</strong></td>
+        <td>${i.descricao}</td>
+        <td><span class="badge badge-gray">${i.tipo}</span></td>
+        <td><strong style="color:var(--blue-900);font-family:'Syne',sans-serif;">${i.quantidade}</strong></td>
+        <td>${fmtDate(i.data)}</td>
+        <td><button class="icon-btn" onclick="deleteItem('impressoes','${i.id}',renderImpressoes)" title="Remover">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3,6 5,6 21,6"/><path d="M19,6v14a2,2,0,0,1-2,2H7a2,2,0,0,1-2-2V6m3,0V4a2,2,0,0,1,2-2h4a2,2,0,0,1,2,2v2"/></svg>
+        </button></td>
+    </tr>`).join('');
+}
+
+// ===== DOCUMENTOS MODAL =====
+function openDocModal(tipo) {
+    const now = new Date();
+    const dataBr = now.toLocaleDateString('pt-BR');
+    document.getElementById('doc-modal-title').textContent = '📄 ' + tipo;
+    document.getElementById('doc-modal-body').innerHTML = `
+        <div style="background:var(--slate-50);border-radius:12px;padding:1.5rem;font-size:0.83rem;line-height:1.7;color:var(--slate-700);border:1px solid var(--slate-200);">
+            <div style="text-align:center;margin-bottom:1.5rem;">
+                <strong style="font-family:'Syne',sans-serif;color:var(--blue-900);display:block;font-size:0.9rem;">EREF IVA FERREIRA</strong>
+                <span style="font-size:0.75rem;color:var(--slate-500);">Secretaria Escolar · Pernambuco - PE</span>
+            </div>
+            <p style="text-align:center;font-weight:800;text-transform:uppercase;margin-bottom:1rem;color:var(--blue-900);">${tipo}</p>
+            <p>Declaro, para os devidos fins, que este documento foi emitido pela Secretaria Escolar da EREF Iva Ferreira, na data de <strong>${dataBr}</strong>.</p>
+            <br>
+            <p>Este documento é válido apenas com assinatura e carimbo da direção escolar.</p>
+            <br>
+            <div style="margin-top:2rem;text-align:center;">
+                <p>_________________________________</p>
+                <p style="font-size:0.75rem;color:var(--slate-500);">Secretaria Escolar · EREF Iva Ferreira</p>
+            </div>
+        </div>
+    `;
+    document.getElementById('doc-modal').classList.add('open');
+}
+function closeDocModal() { document.getElementById('doc-modal').classList.remove('open'); }
+function printDoc() { window.print(); }
+
+// ===== SEARCH =====
+document.getElementById('global-search').addEventListener('input', function() {
+    const q = this.value.toLowerCase().trim();
+    if (!q) return;
+    const currentView = document.querySelector('.view.active').id.replace('view-', '');
+    const tables = document.querySelectorAll('.view.active tbody tr, .view.active .item-card');
+    tables.forEach(row => {
+        const text = row.textContent.toLowerCase();
+        row.style.display = text.includes(q) ? '' : 'none';
+    });
+});
+
+
+// ===== RELATÓRIOS =====
+function renderRelatorios() {
+    const inicio = document.getElementById('rel-inicio').value;
+    const fim = document.getElementById('rel-fim').value;
+    const filtrar = (arr) => arr.filter(i => {
+        if (!inicio && !fim) return true;
+        const d = i.data || i.cadastrado || '';
+        if (inicio && d < inicio) return false;
+        if (fim && d > fim) return false;
+        return true;
+    });
+    const of = filtrar(db.oficios);
+    const im = filtrar(db.impressoes);
+    const tr = filtrar(db.transferencias);
+    const at = filtrar(db.atendimentos);
+    const pr = filtrar(db.protocolos);
+    document.getElementById('rel-count-oficios').textContent = of.length;
+    document.getElementById('rel-count-impressoes').textContent = im.reduce((a,i)=>a+parseInt(i.quantidade||0),0);
+    document.getElementById('rel-count-transferencias').textContent = tr.length;
+    document.getElementById('rel-count-atendimentos').textContent = at.length;
+    document.getElementById('rel-count-protocolos').textContent = pr.length;
+    document.getElementById('rel-count-total').textContent = of.length + im.length + tr.length + at.length + pr.length;
+}
+
+function limparFiltro() {
+    document.getElementById('rel-inicio').value = '';
+    document.getElementById('rel-fim').value = '';
+    renderRelatorios();
+}
+
+function getFiltered(collection) {
+    const inicio = document.getElementById('rel-inicio').value;
+    const fim = document.getElementById('rel-fim').value;
+    return db[collection].filter(i => {
+        if (!inicio && !fim) return true;
+        const d = i.data || i.cadastrado || '';
+        if (inicio && d < inicio) return false;
+        if (fim && d > fim) return false;
+        return true;
+    });
+}
+
+function fmtDatePDF(iso) {
+    if (!iso) return '—';
+    const d = new Date(iso + (iso.includes('T') ? '' : 'T00:00:00'));
+    return d.toLocaleDateString('pt-BR');
+}
+
+function gerarPDF(tipo) {
+    const now = new Date();
+    const dataEmissao = now.toLocaleDateString('pt-BR', { day:'2-digit', month:'long', year:'numeric' });
+
+    const configs = {
+        oficios: {
+            titulo: 'Relatório de Ofícios Emitidos',
+            icone: '📄',
+            cor: '#1e3a8a',
+            dados: getFiltered('oficios'),
+            colunas: ['Número', 'Assunto', 'Destinatário', 'Tipo', 'Data'],
+            linha: o => [o.numero, o.assunto, o.destinatario, o.tipo, fmtDatePDF(o.data)]
+        },
+        impressoes: {
+            titulo: 'Relatório de Controle de Impressões',
+            icone: '🖨️',
+            cor: '#1e3a8a',
+            dados: getFiltered('impressoes'),
+            colunas: ['Responsável', 'Descrição', 'Tipo', 'Páginas', 'Data'],
+            linha: i => [i.usuario, i.descricao, i.tipo, i.quantidade + ' pág.', fmtDatePDF(i.data)],
+            rodape: (dados) => {
+                const total = dados.reduce((a,i)=>a+parseInt(i.quantidade||0),0);
+                return '<tr style="background:#eff6ff;font-weight:700;"><td colspan="3" style="padding:10px 14px;border:1px solid #dde4f0;color:#1e3a8a;">TOTAL DE PÁGINAS IMPRESSAS</td><td style="padding:10px 14px;border:1px solid #dde4f0;color:#1e3a8a;font-size:1.1em;">' + total + ' pág.</td><td style="border:1px solid #dde4f0;"></td></tr>';
+            }
+        },
+        transferencias: {
+            titulo: 'Relatório de Transferências',
+            icone: '🔄',
+            cor: '#1e3a8a',
+            dados: getFiltered('transferencias'),
+            colunas: ['Aluno', 'Tipo', 'Turma', 'Escola', 'Data'],
+            linha: t => [t.aluno, t.tipo, t.turma, t.escola, fmtDatePDF(t.data)]
+        },
+        atendimentos: {
+            titulo: 'Relatório de Atendimentos',
+            icone: '👥',
+            cor: '#1e3a8a',
+            dados: getFiltered('atendimentos'),
+            colunas: ['Nome', 'Tipo', 'Motivo', 'Horário', 'Data'],
+            linha: a => [a.nome, a.tipo, a.descricao, a.horario || '—', fmtDatePDF(a.data)]
+        },
+        protocolos: {
+            titulo: 'Relatório de Protocolos',
+            icone: '📋',
+            cor: '#1e3a8a',
+            dados: getFiltered('protocolos'),
+            colunas: ['Nº Protocolo', 'Documento', 'Solicitante', 'Status', 'Data'],
+            linha: p => [p.numero, p.tipoDoc, p.solicitante, p.status, fmtDatePDF(p.data)]
+        },
+        todos: {
+            titulo: 'Relatório Completo — EREF Iva Ferreira',
+            icone: '📦',
+            cor: '#1e3a8a',
+            dados: [
+                ...getFiltered('oficios').map(o => ({_mod:'OFÍCIO', c1:o.numero, c2:o.assunto, c3:o.destinatario, c4:o.tipo, data:o.data})),
+                ...getFiltered('impressoes').map(i => ({_mod:'IMPRESSÃO', c1:i.usuario, c2:i.descricao, c3:i.tipo, c4:i.quantidade+' pág.', data:i.data})),
+                ...getFiltered('transferencias').map(t => ({_mod:'TRANSFERÊNCIA', c1:t.aluno, c2:t.tipo, c3:t.turma, c4:t.escola, data:t.data})),
+                ...getFiltered('atendimentos').map(a => ({_mod:'ATENDIMENTO', c1:a.nome, c2:a.tipo, c3:a.descricao, c4:a.horario||'—', data:a.data})),
+                ...getFiltered('protocolos').map(p => ({_mod:'PROTOCOLO', c1:p.numero, c2:p.tipoDoc, c3:p.solicitante, c4:p.status, data:p.data})),
+            ],
+            colunas: ['Módulo', 'Campo 1', 'Campo 2', 'Campo 3', 'Campo 4', 'Data'],
+            linha: x => [x._mod, x.c1, x.c2, x.c3, x.c4, fmtDatePDF(x.data)]
+        }
+    };
+
+    const cfg = configs[tipo];
+    if (!cfg) return;
+
+    const inicio = document.getElementById('rel-inicio').value;
+    const fim = document.getElementById('rel-fim').value;
+    const periodoTexto = (inicio || fim)
+        ? 'Período: ' + (inicio ? fmtDatePDF(inicio) : 'início') + ' a ' + (fim ? fmtDatePDF(fim) : 'hoje')
+        : 'Período: Todos os registros';
+
+    const linhasHTML = cfg.dados.map((item, idx) => {
+        const cols = cfg.linha(item);
+        const bg = idx % 2 === 0 ? '#ffffff' : '#f8fafc';
+        return '<tr style="background:' + bg + ';">' + cols.map(c =>
+            '<td style="padding:9px 14px;border:1px solid #e2e8f0;font-size:12px;color:#334155;">' + (c||'—') + '</td>'
+        ).join('') + '</tr>';
+    }).join('');
+
+    const rodapeHTML = cfg.rodape ? cfg.rodape(cfg.dados) : '';
+
+    const html = '<!DOCTYPE html>' +
+    '<html lang="pt-BR"><head><meta charset="UTF-8">' +
+    '<title>' + cfg.titulo + '</title>' +
+    '<style>' +
+    '* { margin:0; padding:0; box-sizing:border-box; }' +
+    'body { font-family: Arial, sans-serif; color: #1e293b; background: white; padding: 40px; }' +
+    '.header { display:flex; justify-content:space-between; align-items:flex-start; border-bottom:3px solid #1e3a8a; padding-bottom:20px; margin-bottom:24px; }' +
+    '.escola-info h1 { font-size:15px; font-weight:900; color:#1e3a8a; text-transform:uppercase; }' +
+    '.escola-info p { font-size:11px; color:#64748b; margin-top:3px; }' +
+    '.rel-titulo { text-align:right; }' +
+    '.rel-titulo h2 { font-size:14px; font-weight:900; color:#1e3a8a; }' +
+    '.rel-titulo p { font-size:10px; color:#94a3b8; margin-top:3px; }' +
+    '.meta { display:flex; gap:24px; margin-bottom:20px; }' +
+    '.meta-item { background:#eff6ff; border-radius:8px; padding:10px 16px; }' +
+    '.meta-item .label { font-size:9px; font-weight:700; color:#64748b; text-transform:uppercase; letter-spacing:.05em; }' +
+    '.meta-item .value { font-size:13px; font-weight:900; color:#1e3a8a; margin-top:2px; }' +
+    'table { width:100%; border-collapse:collapse; margin-top:8px; }' +
+    'thead tr { background:#1e3a8a; }' +
+    'thead th { padding:10px 14px; text-align:left; font-size:10px; font-weight:700; color:white; text-transform:uppercase; letter-spacing:.06em; border:1px solid #1e3a8a; }' +
+    '.footer { margin-top:32px; padding-top:16px; border-top:1px solid #e2e8f0; display:flex; justify-content:space-between; font-size:10px; color:#94a3b8; }' +
+    '.assinatura { margin-top:48px; text-align:center; }' +
+    '.assinatura .linha { border-top:1px solid #334155; width:260px; margin:0 auto 6px; }' +
+    '.assinatura p { font-size:11px; color:#475569; }' +
+    '</style></head><body>' +
+    '<div class="header">' +
+    '<div class="escola-info"><h1>EREF Iva Ferreira</h1><p>Secretaria Escolar &middot; Pernambuco - PE</p></div>' +
+    '<div class="rel-titulo"><h2>' + cfg.titulo + '</h2><p>Emitido em: ' + dataEmissao + '</p></div>' +
+    '</div>' +
+    '<div class="meta">' +
+    '<div class="meta-item"><div class="label">Total de Registros</div><div class="value">' + cfg.dados.length + '</div></div>' +
+    '<div class="meta-item"><div class="label">Período</div><div class="value" style="font-size:11px;font-weight:600;">' + periodoTexto.replace('Período: ','') + '</div></div>' +
+    '<div class="meta-item"><div class="label">Gerado por</div><div class="value" style="font-size:11px;font-weight:600;">Secretaria Escolar</div></div>' +
+    '</div>' +
+    '<table>' +
+    '<thead><tr>' + cfg.colunas.map(c=>'<th>'+c+'</th>').join('') + '</tr></thead>' +
+    '<tbody>' +
+    (cfg.dados.length === 0
+      ? '<tr><td colspan="' + cfg.colunas.length + '" style="text-align:center;padding:24px;color:#94a3b8;font-size:12px;">Nenhum registro encontrado.</td></tr>'
+      : linhasHTML + rodapeHTML
+    ) +
+    '</tbody></table>' +
+    '<div class="footer">' +
+    '<span>EREF Iva Ferreira &middot; Secretaria Escolar &middot; Pernambuco - PE</span>' +
+    '<span>Documento gerado automaticamente pelo SGE v3.0</span>' +
+    '</div>' +
+    '<div class="assinatura"><div class="linha"></div><p>Secretaria Escolar &mdash; EREF Iva Ferreira</p></div>' +
+    '<scr' + 'ipt>window.onload = () => { window.print(); }</scr' + 'ipt>' +
+    '</body></html>';
+
+    const blob = new Blob([html], {type: 'text/html;charset=utf-8'});
+    const url = URL.createObjectURL(blob);
+    const win = window.open(url, '_blank');
+    if (!win) {
+        // Fallback: create download link
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'relatorio_' + tipo + '.html';
+        a.click();
+    }
+    setTimeout(() => URL.revokeObjectURL(url), 10000);
+}
+
+function downloadCSV(tipo) { gerarPDF(tipo); }
+
+document.addEventListener('change', function(e) {
+    if (e.target.id === 'rel-inicio' || e.target.id === 'rel-fim') renderRelatorios();
+});
+
+
+
+// ===== MOBILE SIDEBAR =====
+function toggleSidebar() {
+    document.getElementById('sidebar').classList.toggle('open');
+    document.getElementById('sidebar-overlay').classList.toggle('open');
+}
+function closeSidebar() {
+    document.getElementById('sidebar').classList.remove('open');
+    document.getElementById('sidebar-overlay').classList.remove('open');
+}
+
+// ===== INIT =====
+window.addEventListener('load', () => {
+    // Wait for Firebase
+    function initApp() {
+        _firestore = window._db;
+        _fsApi = window._fs;
+        loadDB();
+    }
+
+    if (window._firebaseReady) {
+        initApp();
+    } else {
+        document.addEventListener('firebase-ready', initApp);
+    }
+
+    // Set date
+    const now = new Date();
+    const opts = { day: '2-digit', month: 'short' };
+    const dateStr = now.toLocaleDateString('pt-BR', opts).toUpperCase().replace('.', '');
+    document.getElementById('header-date-text').textContent = dateStr;
+    document.getElementById('dash-date').textContent = now.toLocaleDateString('pt-BR', { weekday: 'long', day: '2-digit', month: 'long', year: 'numeric' });
+
+    // Set default dates
+    const today = now.toISOString().split('T')[0];
+    document.querySelectorAll('input[type="date"]').forEach(i => i.value = today);
+    document.querySelectorAll('input[type="time"]').forEach(i => i.value = now.toTimeString().slice(0,5));
+
+    // Nav listeners
+    document.querySelectorAll('.nav-btn').forEach(btn => {
+        btn.addEventListener('click', () => { navigate(btn.dataset.view); closeSidebar(); });
+    });
+
+    // Close modal on overlay click
+    document.getElementById('doc-modal').addEventListener('click', function(e) {
+        if (e.target === this) closeDocModal();
+    });
+
+    updateDashboard();
+    updateDashboard();
+});
+</script>
+
+<script>
+// ===== SISTEMA DE LOGIN — FIREBASE AUTHENTICATION =====
+
+// Mapa: usuário digitado → email Firebase + nome exibido
+const USER_MAP = {
+    'secretaria': { email: 'secretaria@eref.ivaferreira', nome: 'Secretário(a)', perfil: 'Secretaria' },
+    'admin':      { email: 'admin@eref.ivaferreira',      nome: 'Administrador',  perfil: 'Admin' },
+    'diretor':    { email: 'diretor@eref.ivaferreira',    nome: 'Direção',        perfil: 'Direção' },
+};
+
+function toggleLoginPass() {
+    const input = document.getElementById('login-pass');
+    const icon = document.getElementById('eye-icon');
+    if (input.type === 'password') {
+        input.type = 'text';
+        icon.innerHTML = '<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/>';
+    } else {
+        input.type = 'password';
+        icon.innerHTML = '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>';
+    }
+}
+
+function showLoginError(msg) {
+    const el = document.getElementById('login-error');
+    document.getElementById('login-error-msg').textContent = msg;
+    el.classList.add('show');
+    document.getElementById('login-user').style.borderColor = 'var(--red-500)';
+    document.getElementById('login-pass').style.borderColor = 'var(--red-500)';
+}
+
+function hideLoginError() {
+    document.getElementById('login-error').classList.remove('show');
+    document.getElementById('login-user').style.borderColor = '';
+    document.getElementById('login-pass').style.borderColor = '';
+}
+
+function setLoginLoading(loading) {
+    const btn = document.getElementById('login-btn');
+    document.getElementById('login-btn-text').textContent = loading ? 'Verificando...' : 'Entrar no Sistema';
+    document.getElementById('login-btn-icon').style.display = loading ? 'none' : '';
+    document.getElementById('login-spinner').style.display = loading ? 'block' : 'none';
+    btn.disabled = loading;
+}
+
+function enterApp(userKey) {
+    const u = USER_MAP[userKey];
+    if (!u) return;
+
+    // Atualizar header com nome do usuário
+    const avatar = document.querySelector('.avatar');
+    const userInfoP = document.querySelector('.user-info p');
+    const userInfoSpan = document.querySelector('.user-info span');
+    const headerSpan = document.querySelector('.header-date span');
+    if (avatar) avatar.textContent = u.nome.slice(0,2).toUpperCase();
+    if (userInfoP) userInfoP.textContent = u.nome;
+    if (userInfoSpan) userInfoSpan.textContent = u.perfil + ' · Ativo';
+    if (headerSpan) headerSpan.textContent = u.perfil + ' · Ativo';
+
+    // Botão de logout na sidebar
+    const footer = document.getElementById('sidebar-footer');
+    if (footer) {
+        footer.innerHTML = `
+            <div style="margin-bottom:8px;font-size:9px;opacity:0.4;text-transform:uppercase;letter-spacing:0.1em;">SGE v3.0 · EREF Iva Ferreira</div>
+            <button onclick="doLogout()" style="width:100%;display:flex;align-items:center;gap:8px;padding:9px 10px;background:rgba(239,68,68,0.15);border:none;border-radius:8px;color:#fca5a5;font-family:'DM Sans',sans-serif;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;cursor:pointer;transition:all 0.2s;" onmouseover="this.style.background='rgba(239,68,68,0.25)'" onmouseout="this.style.background='rgba(239,68,68,0.15)'">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16,17 21,12 16,7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+                Sair do Sistema
+            </button>`;
+    }
+
+    // Salvar sessão e esconder overlay
+    sessionStorage.setItem('sge_userkey', userKey);
+    document.getElementById('login-overlay').classList.add('hide');
+}
+
+function doLogin() {
+    const usuario = document.getElementById('login-user').value.trim().toLowerCase();
+    const senha = document.getElementById('login-pass').value;
+    hideLoginError();
+
+    if (!usuario || !senha) { showLoginError('Preencha o usuário e a senha.'); return; }
+
+    const userInfo = USER_MAP[usuario];
+    if (!userInfo) {
+        showLoginError('Usuário não encontrado.');
+        return;
+    }
+
+    setLoginLoading(true);
+
+    // Aguardar Firebase estar pronto e autenticar
+    function tryAuth() {
+        const auth = window._auth;
+        const signIn = window._signIn;
+        if (!auth || !signIn) {
+            setTimeout(tryAuth, 200);
+            return;
+        }
+        signIn(auth, userInfo.email, senha)
+            .then(() => {
+                enterApp(usuario);
+            })
+            .catch((err) => {
+                setLoginLoading(false);
+                if (err.code === 'auth/wrong-password' || err.code === 'auth/invalid-credential') {
+                    showLoginError('Senha incorreta. Tente novamente.');
+                } else if (err.code === 'auth/too-many-requests') {
+                    showLoginError('Muitas tentativas. Aguarde alguns minutos.');
+                } else {
+                    showLoginError('Erro ao conectar. Verifique sua internet.');
+                }
+                document.getElementById('login-pass').value = '';
+                document.getElementById('login-pass').focus();
+            });
+    }
+    tryAuth();
+}
+
+function doLogout() {
+    const auth = window._auth;
+    const signOut = window._signOut;
+    if (auth && signOut) signOut(auth);
+    sessionStorage.removeItem('sge_userkey');
+    document.getElementById('login-overlay').classList.remove('hide');
+    document.getElementById('login-user').value = '';
+    document.getElementById('login-pass').value = '';
+    hideLoginError();
+    setLoginLoading(false);
+    setTimeout(() => document.getElementById('login-user').focus(), 100);
+}
+
+// Teclado e sessão
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('login-pass').addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
+    document.getElementById('login-user').addEventListener('keydown', e => { if (e.key === 'Enter') document.getElementById('login-pass').focus(); });
+
+    // Restaurar sessão existente
+    const savedKey = sessionStorage.getItem('sge_userkey');
+    if (savedKey && USER_MAP[savedKey]) {
+        enterApp(savedKey);
+    } else {
+        setTimeout(() => document.getElementById('login-user').focus(), 100);
+    }
+});
+</script>
+</body>
+</html>
